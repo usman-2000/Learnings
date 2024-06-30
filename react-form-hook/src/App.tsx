@@ -13,11 +13,24 @@ function App() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    setError,
+    formState: { errors, isSubmitting },
   } = useForm<FormFields>();
 
-  const handleFormSubmit: SubmitHandler<FormFields> = (data) => {
-    console.log(data);
+  const handleFormSubmit: SubmitHandler<FormFields> = async (data) => {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      console.log(data);
+      throw new Error();
+    } catch (error) {
+      // setError("email", {
+      //   message: "This email is already taken",
+      // });
+
+      setError("root", {
+        message: "Form has some errors",
+      });
+    }
   };
 
   return (
@@ -67,7 +80,15 @@ function App() {
         {errors.password && (
           <div style={{ color: "red" }}>{errors.password.message}</div>
         )}
-        <input type="submit" />
+
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Loading" : "Submit"}
+        </button>
+
+        {/* This will throw error on the whole form */}
+        {errors.root && (
+          <div style={{ color: "red" }}>{errors.root.message}</div>
+        )}
       </form>
     </div>
   );
