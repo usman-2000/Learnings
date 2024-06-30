@@ -1,15 +1,18 @@
-import { FormSubmitHandler, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import "./App.css";
 
 type FormFields = {
-  username: "";
-  email: "";
-  password: "";
+  username: string;
+  email: string;
+  password: string;
 };
 
 function App() {
-  <input type="text" name="username" id="" />;
-  const { register, handleSubmit } = useForm<FormFields>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormFields>();
 
   const handleFormSubmit: SubmitHandler<FormFields> = (data) => {
     console.log(data);
@@ -17,35 +20,52 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Form </h1>
-      <p>We are learning react-form-hook</p>
+      <h1>Registeration</h1>
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <input
           {...register("username", {
-            required: true,
+            required: "Username is required",
+            minLength: {
+              value: 3,
+              message: "The username must be greater than or equal to 3",
+            },
           })}
           type="text"
           name="username"
-          placeholder="username"
         />
+        {errors.username && (
+          <div style={{ color: "red" }}>{errors.username.message}</div>
+        )}
         <input
           {...register("email", {
-            required: true,
+            required: "email is required",
+            validate: (val) => {
+              if (!val.includes("@")) {
+                return "Email must be valid and includes @";
+              }
+            },
           })}
-          type="email"
+          type="string"
           name="email"
-          placeholder="email"
         />
+        {errors.email && (
+          <div style={{ color: "red" }}>{errors.email.message}</div>
+        )}
         <input
           {...register("password", {
-            required: true,
+            required: "Password is required",
+            minLength: {
+              value: 4,
+              message: "The minimum length of a password must be 4",
+            },
           })}
           type="password"
           name="password"
-          placeholder="password"
         />
-
-        <button type="submit">Submit Form</button>
+        {errors.password && (
+          <div style={{ color: "red" }}>{errors.password.message}</div>
+        )}
+        <input type="submit" />
       </form>
     </div>
   );
