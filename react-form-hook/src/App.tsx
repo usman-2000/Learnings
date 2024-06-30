@@ -7,6 +7,8 @@ type FormFields = {
   password: string;
 };
 
+// formState is used to show error messages
+
 function App() {
   const {
     register,
