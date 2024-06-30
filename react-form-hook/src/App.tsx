@@ -85,7 +85,7 @@ function App() {
           {isSubmitting ? "Loading" : "Submit"}
         </button>
 
-        {/* This will throw error on the whole form */}
+        {/* This will throw error on the whole forms */}
         {errors.root && (
           <div style={{ color: "red" }}>{errors.root.message}</div>
         )}
