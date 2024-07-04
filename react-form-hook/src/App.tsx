@@ -1,11 +1,15 @@
 import { SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
 import "./App.css";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-type FormFields = {
-  username: string;
-  email: string;
-  password: string;
-};
+const FormFieldsSchema = z.object({
+  username: z.string(),
+  email: z.string().email(),
+  password: z.string().min(8),
+});
+
+type FormFields = z.infer<typeof FormFieldsSchema>;
 
 // formState is used to show error messages
 
@@ -15,7 +19,13 @@ function App() {
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm<FormFields>();
+  } = useForm<FormFields>({
+    defaultValues: {
+      username: "usmanrahim",
+      email: "usmanrhim@gmail.com",
+    },
+    resolver: zodResolver(FormFieldsSchema),
+  });
 
   const handleFormSubmit: SubmitHandler<FormFields> = async (data) => {
     try {

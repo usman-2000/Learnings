@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@hookform/resolvers": "^3.7.0",
-    "zod": "^3.23.8"
-  }
-}
