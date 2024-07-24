@@ -4,7 +4,7 @@ function rendertext(ele, text) {
 
 function handleWord(text) {
     var wordsCount = text.split(' ')
-    return wordsCount
+    return wordsCount.length
 }
 
 function handleChar(text) {
@@ -13,5 +13,18 @@ function handleChar(text) {
 }
 
 function init() {
+    var textArea = document.querySelector('textarea')
+    var wordsCount = document.querySelector('#words')
+    var charsCount = document.querySelector('#chars')
+
+    textArea.addEventListener('input', function (e) {
+        const text = e.target.value.trim()
+        console.log({ text })
+        rendertext(wordsCount, handleWord(text))
+        rendertext(charsCount, handleChar(text))
+
+    })
 
 }
+
+init()

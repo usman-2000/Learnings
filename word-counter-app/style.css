@@ -33,7 +33,7 @@ body{
     flex-direction: row;
 }
 
-#words,#chars{
+#words,#chars,p{
     width: 150px;
     font-weight: 500;
     font-size: 1.5rem;
