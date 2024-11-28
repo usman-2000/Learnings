@@ -3,7 +3,8 @@ const http = require('http')
 const server = http.createServer((req, res) => {
     if (req.url === '/') {
         console.log("Checking")
-        res.write('Usman Rahim Backend Developer')
+        res.write(`<h1>Hello Usman</h1> 
+            <input placeholder='hehe' type= 'text' />`)
         res.end()
 
     } else {
